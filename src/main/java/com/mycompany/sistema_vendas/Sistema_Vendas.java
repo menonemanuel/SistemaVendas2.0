@@ -4,6 +4,8 @@
 
 package com.mycompany.sistema_vendas;
 
+import com.mycompany.ferramentas.BancoDeDadosMySql;
+
 /**
  *
  * @author emanuel.4966
@@ -11,6 +13,14 @@ package com.mycompany.sistema_vendas;
 public class Sistema_Vendas {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        BancoDeDadosMySql.conectar();
+        
+//        //Teste listagem
+//        DaoCategoria categoria = new DaoCategoria();
+//        
+//        for(int i = 0; i < categoria.listar().size(); i++){
+//            System.out.println(categoria.listar().get(i).getId());
+//            System.out.println(categoria.listar().get(i).getNome());
+//        }
     }
 }
