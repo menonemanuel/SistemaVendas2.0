@@ -8,11 +8,11 @@ package com.my.company.modelo;
  *
  * @author emanuel.4966
  */
-public class ModPais {
+public class ModEstado {
     private int id;
     private String nome;
     
-    public ModPais() {
+    public ModEstado() {
         this.id =  id;
         this.nome = nome;
     }

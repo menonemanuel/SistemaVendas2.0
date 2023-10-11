@@ -4,9 +4,8 @@
  */
 package com.mycompany.visao.categoria;
 
-import com.my.company.dao.DaoPais;
-import com.my.company.modelo.ModCategoria;
-import com.my.company.modelo.ModPais;
+import com.my.company.dao.DaoEstado;
+import com.my.company.modelo.ModEstado;
 import com.mycompany.ferramentas.DadosTemporarios;
 import java.sql.ResultSet;
 import javax.swing.table.DefaultTableModel;
@@ -15,26 +14,27 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author emanuel.4966
  */
-public class ListPais extends javax.swing.JFrame {
+public class ListEstado extends javax.swing.JFrame {
 
     /**
-     * Creates new form ListPais
+     * Creates new form ListEstado
      */
-    public ListPais() {
+    public ListEstado() {
         initComponents();
         setLocationRelativeTo(null);
         
         listarTodos();
     }
-        public void listarTodos(){
+        
+         public void listarTodos(){
         try{
-            DefaultTableModel defaultTableModel = (DefaultTableModel) tablePais.getModel();
+            DefaultTableModel defaultTableModel = (DefaultTableModel) tableEstado.getModel();
             
-            tablePais.setModel(defaultTableModel);
+            tableEstado.setModel(defaultTableModel);
             
-            DaoPais daoPais = new DaoPais();
+            DaoEstado daoEstado = new DaoEstado();
             
-            ResultSet resultSet = daoPais.listarTodos();
+            ResultSet resultSet = daoEstado.listarTodos();
             
             defaultTableModel.setRowCount(0);
             while (resultSet.next()){
@@ -56,11 +56,12 @@ public class ListPais extends javax.swing.JFrame {
             defaultTableModel.addColumn("ID");
             defaultTableModel.addColumn("NOME");
             
-            tablePais.setModel(defaultTableModel);
             
-            DaoPais daoPais = new DaoPais();
+            tableEstado.setModel(defaultTableModel);
             
-            ResultSet resultSet =  daoPais.listarPorId(pId);
+            DaoEstado daoEstado = new DaoEstado();
+            
+            ResultSet resultSet =  daoEstado.listarPorId(pId);
             
             defaultTableModel.setRowCount(0);
             while (resultSet.next()){
@@ -80,12 +81,12 @@ public class ListPais extends javax.swing.JFrame {
             defaultTableModel.addColumn("ID");
             defaultTableModel.addColumn("NOME");
             
-            tablePais.setModel(defaultTableModel);
+            tableEstado.setModel(defaultTableModel);
 
-            DaoPais daoPais = new DaoPais();
+            DaoEstado daoEstado = new DaoEstado();
 
             //Atribui o resultset retornado a uma variável para ser usada.
-            ResultSet resultSet = daoPais.listarPorNome(pNome);
+            ResultSet resultSet = daoEstado.listarPorNome(pNome);
             
             defaultTableModel.setRowCount(0);
             while (resultSet.next()){
@@ -98,7 +99,6 @@ public class ListPais extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,9 +110,9 @@ public class ListPais extends javax.swing.JFrame {
 
         jcbTipoFiltro = new javax.swing.JComboBox<>();
         tfFiltro = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablePais = new javax.swing.JTable();
+        tableEstado = new javax.swing.JTable();
+        button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -124,14 +124,7 @@ public class ListPais extends javax.swing.JFrame {
             }
         });
 
-        btnBuscar.setText("Buscar");
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
-        tablePais.setModel(new javax.swing.table.DefaultTableModel(
+        tableEstado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -150,44 +143,49 @@ public class ListPais extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tablePais.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableEstado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablePaisMouseClicked(evt);
+                tableEstadoMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tablePais);
+        jScrollPane1.setViewportView(tableEstado);
+
+        button.setText("Buscar");
+        button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscar)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcbTipoFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(button)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -197,32 +195,30 @@ public class ListPais extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfFiltroActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
         switch (jcbTipoFiltro.getSelectedIndex()){
         case 0:
             listarTodos();
             break;
         case 1:
-            ListarPorId(Integer.parseInt(tfFiltro.getText()));
+            ListarPorId(Integer.parseInt(button.getText()));
             break;
         case 2:
-            ListarPorNome(tfFiltro.getText());
+            ListarPorNome(button.getText());
         }
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    }//GEN-LAST:event_buttonActionPerformed
 
-    private void tablePaisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePaisMouseClicked
-        if (evt.getClickCount() == 2){
-            ModPais modPais = new ModPais();
+    private void tableEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEstadoMouseClicked
+        ModEstado modEstado = new ModEstado();
 
-            modPais.setId(Integer.parseInt(String.valueOf(tablePais.getValueAt(tablePais.getSelectedRow(), 0))));
-            modPais.SetNome(String.valueOf(tablePais.getValueAt(tablePais.getSelectedRow(), 1)));
+            modEstado.setId(Integer.parseInt(String.valueOf(tableEstado.getValueAt(tableEstado.getSelectedRow(), 0))));
+            modEstado.SetNome(String.valueOf(tableEstado.getValueAt(tableEstado.getSelectedRow(), 1)));
 
-            DadosTemporarios.tempObject = (ModPais) modPais;
+            DadosTemporarios.tempObject = (ModEstado) modEstado;
 
-            CadPais cadPais = new CadPais();
-            cadPais.setVisible(true);
-         }
-    }//GEN-LAST:event_tablePaisMouseClicked
+            CadEstado cadEstado = new CadEstado();
+            cadEstado.setVisible(true);
+    }//GEN-LAST:event_tableEstadoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -241,29 +237,29 @@ public class ListPais extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListEstado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListPais().setVisible(true);
+                new ListEstado().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton button;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JComboBox<String> jcbTipoFiltro;
-    private javax.swing.JTable tablePais;
+    private javax.swing.JTable tableEstado;
     private javax.swing.JTextField tfFiltro;
     // End of variables declaration//GEN-END:variables
 }

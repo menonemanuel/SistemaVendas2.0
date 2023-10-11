@@ -8,15 +8,15 @@ package com.my.company.modelo;
  *
  * @author emanuel.4966
  */
-public class ModPais {
+public class ModCidade {
     private int id;
     private String nome;
     
-    public ModPais() {
+    public ModCidade () {
         this.id =  id;
         this.nome = nome;
     }
-
+   
     public int getId() {
         return id;
     }

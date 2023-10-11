@@ -4,8 +4,10 @@
  */
 package com.mycompany.visao.categoria;
 
+import com.my.company.dao.DaoCidade;
+import com.my.company.dao.DaoEstado;
 import com.my.company.dao.DaoPais;
-import com.my.company.modelo.ModPais;
+import com.my.company.modelo.ModCidade;
 import com.mycompany.ferramentas.Constantes;
 import com.mycompany.ferramentas.DadosTemporarios;
 import com.mycompany.ferramentas.Formularios;
@@ -15,18 +17,18 @@ import javax.swing.JOptionPane;
  *
  * @author emanuel.4966
  */
-public class CadPais extends javax.swing.JFrame {
+public class CadCidade extends javax.swing.JFrame {
 
     /**
-     * Creates new form CadPais
+     * Creates new form CadCidade
      */
-    public CadPais () {
+    public CadCidade() {
         initComponents();
         
         if(!existeDadosTemporarios()){
-            DaoPais daoPais = new DaoPais();
+            DaoCidade daoCidade = new DaoCidade();
 
-            int id = daoPais.buscarProximoId(); 
+            int id = daoCidade.buscarProximoId(); 
             if (id > 0)
                 tfId.setText(String.valueOf(id));
             
@@ -43,11 +45,11 @@ public class CadPais extends javax.swing.JFrame {
     }
 
     private Boolean existeDadosTemporarios(){        
-        if(DadosTemporarios.tempObject instanceof ModPais){
-            int id = ((ModPais) DadosTemporarios.tempObject).getId();
-            String nome = ((ModPais) DadosTemporarios.tempObject).getNome();
+        if(DadosTemporarios.tempObject instanceof ModCidade){
+            int id = ((ModCidade) DadosTemporarios.tempObject).getId();
+            String nome = ((ModCidade) DadosTemporarios.tempObject).getNome();
             
-            tfId.setText(String.valueOf(id));
+            labell.setText(String.valueOf(id));
             tfNome.setText(nome);
         
             DadosTemporarios.tempObject = null;
@@ -56,6 +58,7 @@ public class CadPais extends javax.swing.JFrame {
         }else
             return false;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,18 +69,28 @@ public class CadPais extends javax.swing.JFrame {
     private void initComponents() {
 
         btnAcao = new javax.swing.JButton();
-        btnExcluir = new javax.swing.JButton();
+        labell = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         tfId = new javax.swing.JTextField();
-        GetId = new javax.swing.JLabel();
         tfNome = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        btnExcluir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnAcao.setText("Salvar");
         btnAcao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAcaoActionPerformed(evt);
+            }
+        });
+
+        labell.setText("ID");
+
+        jLabel2.setText("Nome:");
+
+        tfId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfIdActionPerformed(evt);
             }
         });
 
@@ -88,82 +101,61 @@ public class CadPais extends javax.swing.JFrame {
             }
         });
 
-        tfId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfIdActionPerformed(evt);
-            }
-        });
-
-        GetId.setText("ID");
-
-        tfNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfNomeActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Nome:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labell)
+                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(GetId))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(tfId, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addComponent(tfNome))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAcao)
-                                .addGap(51, 51, 51)
-                                .addComponent(btnExcluir)))))
-                .addContainerGap(174, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(tfId, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfNome, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(btnAcao)))
+                        .addGap(42, 42, 42)
+                        .addComponent(btnExcluir)))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(GetId)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(labell)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAcao)
                     .addComponent(btnExcluir))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(68, 68, 68))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfNomeActionPerformed
-
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-            int escolha = 
-                JOptionPane.showConfirmDialog(
-                        null, 
-                        "Deseja realmente excluir a categoria " + tfId.getText() + "?");
-        
-        if(escolha == JOptionPane.YES_OPTION)
-            excluir();
-    }//GEN-LAST:event_btnExcluirActionPerformed
-
     private void tfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfIdActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+         int escolha = 
+                JOptionPane.showConfirmDialog(
+                        null, 
+                        "Deseja realmente excluir a cidade " + tfNome.getText() + "?");
+        
+        if(escolha == JOptionPane.YES_OPTION)
+            excluir();
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcaoActionPerformed
         if (btnAcao.getText() == Constantes.BTN_SALVAR_TEXT)
@@ -171,30 +163,30 @@ public class CadPais extends javax.swing.JFrame {
         else if (btnAcao.getText() == Constantes.BTN_ALTERAR_TEXT)
             alterar();
     }//GEN-LAST:event_btnAcaoActionPerformed
-    
-    private void inserir(){
-        DaoPais daoPais= new DaoPais();
-        
-        if (daoPais.inserir(Integer.parseInt(tfId.getText()), tfNome.getText())){
-            JOptionPane.showMessageDialog(null, "País salvo com sucesso!");
-            
-            tfId.setText("");
+
+     private void inserir(){
+        DaoEstado daoEstado = new DaoEstado();
+
+        if (daoEstado.inserir(Integer.parseInt(labell.getText()), tfNome.getText())){
+            JOptionPane.showMessageDialog(null, "Cidade salva com sucesso!");
+
+            labell.setText("");
             tfNome.setText("");
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possível salvar o país!");
+            JOptionPane.showMessageDialog(null, "Não foi possível salvar a cidade!");
         }
     }
-     
+    
      private void alterar(){
-        DaoPais daoPais = new DaoPais();
+        DaoEstado daoEstado = new DaoEstado();
         
-        if (daoPais.alterar(Integer.parseInt(GetId.getText()), tfId.getText())){
-            JOptionPane.showMessageDialog(null, "Categoria alterada com sucesso!");
+        if (daoEstado.alterar(Integer.parseInt(labell.getText()), tfNome.getText())){
+            JOptionPane.showMessageDialog(null, "Cidade alterada com sucesso!");
             
-            GetId.setText("");
-            tfId.setText("");
+            labell.setText("");
+            tfNome.setText("");
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possível alterar a categoria!");
+            JOptionPane.showMessageDialog(null, "Não foi possível alterar a cidade!");
         }
         
         ((ListCategoria) Formularios.listCategoria).listarTodos();
@@ -204,19 +196,19 @@ public class CadPais extends javax.swing.JFrame {
           private void excluir(){
               DaoPais daoPais = new DaoPais();
         
-        if (daoPais.excluir(Integer.parseInt(GetId.getText()))){
-            JOptionPane.showMessageDialog(null, "Categoria " + tfId.getText() + " excluída com sucesso!");
+        if (daoPais.excluir(Integer.parseInt(labell.getText()))){
+            JOptionPane.showMessageDialog(null, "Cidade " + tfNome.getText() + " excluída com sucesso!");
             
-            GetId.setText("");
             tfId.setText("");
+            tfNome.setText("");
         }else{
-            JOptionPane.showMessageDialog(null, "Não foi possível excluir a categoria!");
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir a cidade!");
         }
         
-        ((ListCategoria) Formularios.listCategoria).listarTodos();
+        ((ListCategoria) Formularios.listCidade).listarTodos();
         
         dispose();
-          
+        
     }
     /**
      * @param args the command line arguments
@@ -235,29 +227,29 @@ public class CadPais extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadCidade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadPais().setVisible(true);
+                new CadCidade().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel GetId;
     private javax.swing.JButton btnAcao;
     private javax.swing.JButton btnExcluir;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel labell;
     private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
