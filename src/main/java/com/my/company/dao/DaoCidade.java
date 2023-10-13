@@ -38,7 +38,7 @@ public class DaoCidade {
     
      public Boolean alterar(int id, String novoNome){
         try{
-            sql = "UPDATE CATEGORIA SET NOME = ? WHERE ID = ?";
+            sql = "UPDATE CIDADE SET NOME = ? WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -56,7 +56,7 @@ public class DaoCidade {
     
     public Boolean excluir(int id){
         try{
-            sql = "DELETE FROM CATEGORIA WHERE ID = ?";
+            sql = "DELETE FROM CIDADE WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             

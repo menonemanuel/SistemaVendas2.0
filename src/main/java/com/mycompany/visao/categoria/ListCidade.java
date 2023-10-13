@@ -5,6 +5,7 @@
 package com.mycompany.visao.categoria;
 
 import com.my.company.dao.DaoCidade;
+import com.my.company.dao.DaoEstado;
 import com.my.company.modelo.ModCidade;
 import com.my.company.modelo.ModEstado;
 import com.mycompany.ferramentas.DadosTemporarios;
@@ -54,9 +55,6 @@ public class ListCidade extends javax.swing.JFrame {
         try{
             DefaultTableModel defaultTableModel =  new DefaultTableModel();
             
-            defaultTableModel.addColumn("ID");
-            defaultTableModel.addColumn("NOME");
-            
             tableCidade.setModel(defaultTableModel);
             
             DaoCidade daoCidade = new DaoCidade();
@@ -78,8 +76,6 @@ public class ListCidade extends javax.swing.JFrame {
     public void ListarPorNome(String pNome){
         try{ //Define o Modelo da tabela
             DefaultTableModel defaultTableModel = new DefaultTableModel();
-            defaultTableModel.addColumn("ID");
-            defaultTableModel.addColumn("NOME");
             
             tableCidade.setModel(defaultTableModel);
 
@@ -216,7 +212,7 @@ public class ListCidade extends javax.swing.JFrame {
 
             modCidade.setId(Integer.parseInt(String.valueOf(tableCidade.getValueAt(tableCidade.getSelectedRow(), 0))));
             modCidade.SetNome(String.valueOf(tableCidade.getValueAt(tableCidade.getSelectedRow(), 1)));
-
+               
             DadosTemporarios.tempObject = (ModCidade) modCidade;
 
             CadCidade cadCidade = new CadCidade();

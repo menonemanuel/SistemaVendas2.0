@@ -44,7 +44,7 @@ public class DaoPais extends BancoDeDadosMySql{
             
             setStatement(getConexao().prepareStatement(sql));
             
-            getStatement().setInt(3, id);
+            getStatement().setInt(2, id);
             getStatement().setString(1, novoNome);
             
             getStatement().executeUpdate();

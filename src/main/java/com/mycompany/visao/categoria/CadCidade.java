@@ -11,6 +11,7 @@ import com.my.company.modelo.ModCidade;
 import com.mycompany.ferramentas.Constantes;
 import com.mycompany.ferramentas.DadosTemporarios;
 import com.mycompany.ferramentas.Formularios;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 /**
@@ -74,6 +75,8 @@ public class CadCidade extends javax.swing.JFrame {
         tfId = new javax.swing.JTextField();
         tfNome = new javax.swing.JTextField();
         btnExcluir = new javax.swing.JButton();
+        jcbEstado = new javax.swing.JComboBox<>();
+        tfIdEstado = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +104,8 @@ public class CadCidade extends javax.swing.JFrame {
             }
         });
 
+        jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,18 +113,27 @@ public class CadCidade extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labell)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(tfId, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNome, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(btnAcao)))
-                        .addGap(42, 42, 42)
-                        .addComponent(btnExcluir)))
-                .addContainerGap(131, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(tfId, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfNome, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGap(50, 50, 50)
+                                    .addComponent(btnAcao)))
+                            .addComponent(labell))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(btnExcluir))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(61, 61, 61)
+                                .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(53, 53, 53)
+                                .addComponent(tfIdEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,11 +141,15 @@ public class CadCidade extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addComponent(labell)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfIdEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAcao)
@@ -165,9 +183,9 @@ public class CadCidade extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAcaoActionPerformed
 
      private void inserir(){
-        DaoEstado daoEstado = new DaoEstado();
+        DaoCidade daoCidade = new DaoCidade();
 
-        if (daoEstado.inserir(Integer.parseInt(labell.getText()), tfNome.getText())){
+        if (daoCidade.inserir(Integer.parseInt(labell.getText()), tfNome.getText())){
             JOptionPane.showMessageDialog(null, "Cidade salva com sucesso!");
 
             labell.setText("");
@@ -178,25 +196,25 @@ public class CadCidade extends javax.swing.JFrame {
     }
     
      private void alterar(){
-        DaoEstado daoEstado = new DaoEstado();
+        DaoCidade daoCidade = new DaoCidade();
         
-        if (daoEstado.alterar(Integer.parseInt(labell.getText()), tfNome.getText())){
+        if (daoCidade.alterar(Integer.parseInt(tfId.getText()), tfNome.getText())){
             JOptionPane.showMessageDialog(null, "Cidade alterada com sucesso!");
             
-            labell.setText("");
+            tfId.setText("");
             tfNome.setText("");
         }else{
             JOptionPane.showMessageDialog(null, "Não foi possível alterar a cidade!");
         }
         
-        ((ListCategoria) Formularios.listCategoria).listarTodos();
+        ((ListCidade) Formularios.listCidade).listarTodos();
         
         dispose();
      }
           private void excluir(){
-              DaoPais daoPais = new DaoPais();
+              DaoCidade daoCidade = new DaoCidade();
         
-        if (daoPais.excluir(Integer.parseInt(labell.getText()))){
+        if (daoCidade.excluir(Integer.parseInt(tfId.getText()))){
             JOptionPane.showMessageDialog(null, "Cidade " + tfNome.getText() + " excluída com sucesso!");
             
             tfId.setText("");
@@ -205,10 +223,36 @@ public class CadCidade extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Não foi possível excluir a cidade!");
         }
         
-        ((ListCategoria) Formularios.listCidade).listarTodos();
+        ((ListCidade) Formularios.listCidade).listarTodos();
         
         dispose();
         
+    }
+          
+           private void carregarEstados(){
+        try{
+            DaoEstado daoEstado = new DaoEstado();
+
+            ResultSet resultSet = daoEstado.listarTodos();
+
+            while(resultSet.next()){
+                jcbEstado.addItem(resultSet.getString("ESTADO"));
+            }
+        }catch(Exception e){
+            
+        }
+    }
+    
+    private void recuperaIdEstado(){
+        try{
+            DaoEstado daoEstado = new DaoEstado();
+            ResultSet resultSet = daoEstado.listarPorNome(jcbEstado.getSelectedItem().toString());
+            
+            resultSet.next();
+            tfIdEstado.setText(resultSet.getString("ID"));
+        }catch(Exception e){
+            System.out.println(e.getMessage());            
+        }
     }
     /**
      * @param args the command line arguments
@@ -249,8 +293,10 @@ public class CadCidade extends javax.swing.JFrame {
     private javax.swing.JButton btnAcao;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<String> jcbEstado;
     private javax.swing.JLabel labell;
     private javax.swing.JTextField tfId;
+    private javax.swing.JTextField tfIdEstado;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
 }

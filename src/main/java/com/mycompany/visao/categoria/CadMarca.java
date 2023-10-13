@@ -4,58 +4,19 @@
  */
 package com.mycompany.visao.categoria;
 
-import com.my.company.dao.DaoPais;
-import com.my.company.modelo.ModPais;
-import com.mycompany.ferramentas.Constantes;
-import com.mycompany.ferramentas.DadosTemporarios;
-import com.mycompany.ferramentas.Formularios;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author emanuel.4966
  */
-public class CadPais extends javax.swing.JFrame {
+public class CadMarca extends javax.swing.JFrame {
 
     /**
-     * Creates new form CadPais
+     * Creates new form CadMarca
      */
-    public CadPais () {
+    public CadMarca() {
         initComponents();
-        
-        if(!existeDadosTemporarios()){
-            DaoPais daoPais = new DaoPais();
-
-            int id = daoPais.buscarProximoId(); 
-            if (id > 0)
-                tfId.setText(String.valueOf(id));
-            
-            btnAcao.setText(Constantes.BTN_SALVAR_TEXT);
-            btnExcluir.setVisible(false);
-        }else{
-            btnAcao.setText(Constantes.BTN_ALTERAR_TEXT);
-            btnExcluir.setVisible(true);
-        }
-        
-        setLocationRelativeTo(null);
-        
-        tfId.setEnabled(false);
     }
 
-    private Boolean existeDadosTemporarios(){        
-        if(DadosTemporarios.tempObject instanceof ModPais){
-            int id = ((ModPais) DadosTemporarios.tempObject).getId();
-            String nome = ((ModPais) DadosTemporarios.tempObject).getNome();
-            
-            tfId.setText(String.valueOf(id));
-            tfNome.setText(nome);
-        
-            DadosTemporarios.tempObject = null;
-            
-            return true;
-        }else
-            return false;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,14 +26,30 @@ public class CadPais extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        GetId = new javax.swing.JLabel();
+        tfId = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tfNome = new javax.swing.JTextField();
         btnAcao = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        tfId = new javax.swing.JTextField();
-        GetId = new javax.swing.JLabel();
-        tfNome = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        GetId.setText("ID");
+
+        tfId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfIdActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Nome:");
+
+        tfNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNomeActionPerformed(evt);
+            }
+        });
 
         btnAcao.setText("Salvar");
         btnAcao.addActionListener(new java.awt.event.ActionListener() {
@@ -87,22 +64,6 @@ public class CadPais extends javax.swing.JFrame {
                 btnExcluirActionPerformed(evt);
             }
         });
-
-        tfId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfIdActionPerformed(evt);
-            }
-        });
-
-        GetId.setText("ID");
-
-        tfNome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfNomeActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Nome:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,77 +108,31 @@ public class CadPais extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfNomeActionPerformed
-
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-            int escolha = 
-                JOptionPane.showConfirmDialog(
-                        null, 
-                        "Deseja realmente excluir a categoria " + tfId.getText() + "?");
-        
-        if(escolha == JOptionPane.YES_OPTION)
-            excluir();
-    }//GEN-LAST:event_btnExcluirActionPerformed
-
     private void tfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfIdActionPerformed
 
+    private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfNomeActionPerformed
+
     private void btnAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcaoActionPerformed
         if (btnAcao.getText() == Constantes.BTN_SALVAR_TEXT)
-            inserir();
+        inserir();
         else if (btnAcao.getText() == Constantes.BTN_ALTERAR_TEXT)
-            alterar();
+        alterar();
     }//GEN-LAST:event_btnAcaoActionPerformed
-    
-    private void inserir(){
-        DaoPais daoPais= new DaoPais();
-        
-        if (daoPais.inserir(Integer.parseInt(tfId.getText()), tfNome.getText())){
-            JOptionPane.showMessageDialog(null, "País salvo com sucesso!");
-            
-            tfId.setText("");
-            tfNome.setText("");
-        }else{
-            JOptionPane.showMessageDialog(null, "Não foi possível salvar o país!");
-        }
-    }
-     
-     private void alterar(){
-        DaoPais daoPais = new DaoPais();
-        
-        if (daoPais.alterar(Integer.parseInt(tfId.getText()), tfNome.getText())){
-            JOptionPane.showMessageDialog(null, "Categoria alterada com sucesso!");
-            
-            tfId.setText("");
-            tfNome.setText("");
-        }else{
-            JOptionPane.showMessageDialog(null, "Não foi possível alterar a categoria!");
-        }
-        
-        ((ListPais) Formularios.listPais).listarTodos();
-        
-        dispose();
-     }
-          private void excluir(){
-              DaoPais daoPais = new DaoPais();
-        
-        if (daoPais.excluir(Integer.parseInt(GetId.getText()))){
-            JOptionPane.showMessageDialog(null, "Categoria " + tfId.getText() + " excluída com sucesso!");
-            
-            GetId.setText("");
-            tfId.setText("");
-        }else{
-            JOptionPane.showMessageDialog(null, "Não foi possível excluir a categoria!");
-        }
-        
-        ((ListPais) Formularios.listPais).listarTodos();
-        
-        dispose();
-          
-    }
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int escolha =
+        JOptionPane.showConfirmDialog(
+            null,
+            "Deseja realmente excluir a categoria " + tfId.getText() + "?");
+
+        if(escolha == JOptionPane.YES_OPTION)
+        excluir();
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -235,20 +150,20 @@ public class CadPais extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadPais.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadMarca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadPais().setVisible(true);
+                new CadMarca().setVisible(true);
             }
         });
     }
